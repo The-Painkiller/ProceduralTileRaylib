@@ -10,10 +10,7 @@ BaseTile::~BaseTile()
 {
 	_tileSize = 0;
 	_terrainTileType = TerrainTileType::InvalidTileType;
-	_tilePossibilities.clear();
-	
-	delete _tileTexturePath;
-	_tileTexturePath = nullptr;
+	_tilePossibilities.clear();	
 }
 
 void BaseTile::SetPossibilities()
@@ -43,15 +40,9 @@ void BaseTile::RemovePossibilityIfExists(TerrainTileType type)
 	}
 }
 
-void BaseTile::ForceSetTile(const TerrainTileType type, char* texturePath, const unsigned size)
+void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size)
 {
 	_terrainTileType = type;
-	_tileTexturePath = texturePath;
 	_tileSize = size;
 	_tilePossibilities.clear();
-}
-
-char* BaseTile::GetTileTexturePath()
-{
-	return _tileTexturePath;
 }
