@@ -1,0 +1,18 @@
+{
+  "Grass": {
+    "TexturePath": "Grass.png",
+    "Neighbours": "[Grass, Rock, Sand]"
+  },
+  "Rock": {
+    "TexturePath": "Rock.png",
+    "Neighbours": "[Grass, Rock, Sand]"
+  },
+  "Sand": {
+    "TexturePath": "Sand.png",
+    "Neighbours": "[Grass, Rock, Sand, Water]"
+  },
+  "Water": {
+    "TexturePath": "Water.png",
+    "Neighbours": "[Water, Sand]"
+  }
+}

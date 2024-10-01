@@ -12,19 +12,60 @@ RenderManager::RenderManager(Vector2 gridSize, Vector2 tileSize)
 
 }
 
-void RenderManager::RenderLoop(const BaseTile** tileArray)
+void RenderManager::RenderLoop(BaseTile** tileArray)
 {
 	BeginDrawing();
 	ClearBackground(LIGHTGRAY);
 	BeginMode2D(_camera);
-	Draw(tileArray);
+	DrawTileGrid(tileArray);
 	EndMode2D();
 	EndDrawing();
 }
 
-void RenderManager::Draw(const BaseTile** tileArray)
+void RenderManager::DrawTileGrid(BaseTile** tileArray)
 {
-	///DrawTextureRec
+	for (int i = 0; i < _gridSize.x; i++)
+	{
+		for (int j = 0; j < _gridSize.y; j++)
+		{
+			DrawTile(tileArray[i][j].GetTerrainTileType(), tileArray[i][j].IsTransitionTile(), i, j);
+		}
+	}
+}
+
+void RenderManager::DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY)
+{
+	int textureIndex = isTransitionTile ? 1 : 0;
+	switch (tileType)
+	{
+	case Rock:
+	{
+		DrawTexture(_rockTextures[textureIndex], gridX * _gridSize.x, gridY * _gridSize.y, WHITE);
+		break;
+	}
+	case Grass:
+	{
+		DrawTexture(_grassTextures[textureIndex], gridX * _gridSize.x, gridY * _gridSize.y, WHITE);
+		break;
+	}
+	case Sand:
+	{
+		DrawTexture(_sandTextures[textureIndex], gridX * _gridSize.x, gridY * _gridSize.y, WHITE);
+		break;
+	}
+	case Water:
+	{
+		DrawTexture(_waterTextures[textureIndex], gridX * _gridSize.x, gridY * _gridSize.y, WHITE);
+		break;
+	}
+	case TerrainTileTypeCount:
+	case InvalidTileType:
+	default:
+	{
+		DrawTexture(_invalidTerrainTexture, gridX * _gridSize.x, gridY * _gridSize.y, WHITE);
+		break;
+	}
+	}
 }
 
 void RenderManager::Initialize(TileRenderData renderData)

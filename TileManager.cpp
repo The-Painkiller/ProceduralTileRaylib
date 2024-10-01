@@ -1,9 +1,9 @@
 #include "TileManager.h"
 
-TileManager::TileManager(Vector2 gridSize)
+TileManager::TileManager(VectorCoordinates2 gridSize)
 {
 	_gridSize = gridSize;
-	_tiles.assign(_gridSize.X, std::vector<std::unique_ptr<BaseTile>>(_gridSize.Y));
+	//_tiles.assign(_gridSize.X, std::vector<std::unique_ptr<BaseTile>>(_gridSize.Y));
 }
 
 TileManager::~TileManager()

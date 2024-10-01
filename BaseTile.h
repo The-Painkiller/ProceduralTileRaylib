@@ -13,9 +13,12 @@ public:
 	void SetPossibilities(const TerrainTileType types[]);
 	void RemovePossibilityIfExists(const TerrainTileType type);
 	void ForceSetTile(const TerrainTileType type, const unsigned size);
+	TerrainTileType GetTerrainTileType();
+	bool IsTransitionTile();
 
 private:
 	TerrainTileType _terrainTileType = TerrainTileType::InvalidTileType;
 	unsigned int _tileSize = 0;
 	std::vector<TerrainTileType> _tilePossibilities;
+	bool _isTransitionTile = false;
 };

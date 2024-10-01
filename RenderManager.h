@@ -26,7 +26,7 @@ public:
 	RenderManager(Vector2 gridSize, Vector2 tileSize);
 
 	void Initialize(TileRenderData renderData);
-	void RenderLoop(const BaseTile** tileArray);
+	void RenderLoop(BaseTile** tileArray);
 
 private:
 	Vector2 _gridSize;
@@ -44,7 +44,9 @@ private:
 	Texture2D _waterTextures[2];
 	Texture2D _sandTextures[2];
 	Texture2D _rockTextures[2];
+	Texture2D _invalidTerrainTexture;
 	
 	void LoadRenderData();
-	void Draw(const BaseTile** tileArray);
+	void DrawTileGrid(BaseTile** tileArray);
+	void DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY);
 };
