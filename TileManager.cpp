@@ -1,22 +1,22 @@
 #include "TileManager.h"
 
-TileManager::TileManager(VectorCoordinates2 gridSize)
+TileManager::TileManager(int gridSizeX, int gridSizeY)
 {
-	_gridSize = gridSize;
-	//_tiles.assign(_gridSize.X, std::vector<std::unique_ptr<BaseTile>>(_gridSize.Y));
+	_gridSizeX = gridSizeX;
+	_gridSizeY = gridSizeY;
 }
 
 TileManager::~TileManager()
 {
-	_gridSize.X = 0;
-	_gridSize.Y = 0;
+	_gridSizeX = 0;
+	_gridSizeY = 0;
 }
 
 void TileManager::InitializeTileGrid()
 {
-	for (int i = 0; i < _gridSize.X; i++)
+	for (int i = 0; i < _gridSizeX; i++)
 	{
-		for (int j = 0; j < _gridSize.Y; j++)
+		for (int j = 0; j < _gridSizeY; j++)
 		{
 			_tiles[i][j].get()->SetPossibilities();
 		}

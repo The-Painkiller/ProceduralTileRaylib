@@ -1,11 +1,16 @@
 #include "RenderManager.h"
 
-RenderManager::RenderManager(Vector2 gridSize, Vector2 tileSize)
+unsigned int TileRenderData::TextureArraySize = 2;
+
+RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY)
 {
-	_gridSize = gridSize;
-	_tileSize = tileSize;
-	_screenWidth = tileSize.x * gridSize.x;
-	_screenHeight = tileSize.y * gridSize.y;
+	_gridSize.x = gridSizeX;
+	_gridSize.y = gridSizeY;
+
+	_tileSize.x = tileSizeX;
+	_tileSize.y = tileSizeY;
+	_screenWidth = tileSizeX * gridSizeX;
+	_screenHeight = tileSizeY * gridSizeY;
 
 	InitWindow(_screenWidth, _screenHeight, "Procedural 2D Terrain");
 	SetTargetFPS(60);

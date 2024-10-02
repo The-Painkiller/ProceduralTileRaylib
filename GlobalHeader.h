@@ -17,13 +17,13 @@ enum TerrainDirection
 	West,
 	South
 };
-
-struct VectorCoordinates2 
-{
-public:
-	int X = 0;
-	int Y = 0;
-
-	VectorCoordinates2() = default;
-	VectorCoordinates2(int x, int y);
-};
+//
+//struct VectorCoordinates2 
+//{
+//public:
+//	int X = 0;
+//	int Y = 0;
+//
+//	VectorCoordinates2() = default;
+//	VectorCoordinates2(int x, int y);
+//};

@@ -17,13 +17,11 @@ public:
 	char* WaterTexturePaths[2];
 };
 
-unsigned int TileRenderData::TextureArraySize = 2;
-
 class RenderManager
 {
 public:
 	RenderManager() = delete;
-	RenderManager(Vector2 gridSize, Vector2 tileSize);
+	RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY);
 
 	void Initialize(TileRenderData renderData);
 	void RenderLoop(BaseTile** tileArray);
@@ -40,11 +38,11 @@ private:
 	float _mouseWheelScroll = 0.0f;
 	Camera2D _camera = {};
 
-	Texture2D _grassTextures[2];
-	Texture2D _waterTextures[2];
-	Texture2D _sandTextures[2];
-	Texture2D _rockTextures[2];
-	Texture2D _invalidTerrainTexture;
+	Texture2D _grassTextures[2] = {};
+	Texture2D _waterTextures[2] = {};
+	Texture2D _sandTextures[2] = {};
+	Texture2D _rockTextures[2] = {};
+	Texture2D _invalidTerrainTexture = Texture2D();
 	
 	void LoadRenderData();
 	void DrawTileGrid(BaseTile** tileArray);

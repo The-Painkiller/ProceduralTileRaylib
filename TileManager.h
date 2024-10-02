@@ -7,12 +7,13 @@ class TileManager
 {
 public:
 	TileManager() = delete;
-	explicit TileManager(VectorCoordinates2 gridSize);
+	explicit TileManager(int gridSizeX, int gridSizeY);
 	~TileManager();
 
 	void InitializeTileGrid();
 
 private:
-	VectorCoordinates2 _gridSize;
+	int _gridSizeX = 0;
+	int _gridSizeY = 0;
 	std::vector<std::vector<std::unique_ptr<BaseTile>>> _tiles;
 };

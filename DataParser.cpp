@@ -9,7 +9,7 @@ void DataParser::Initialize()
 	{
 		std::string type = std::to_string((TerrainTileType)i);
 		std::string s = json::string_t(_terrainTileData[type]["TexturePath"]);
-		for (auto& elem : _terrainTileData["Grass"]["Neighbours"])
+		for (auto& elem : _terrainTileData[type]["Neighbours"])
 		{
 			//elem[0]
 		}
@@ -19,4 +19,9 @@ void DataParser::Initialize()
 std::string DataParser::GetTerrainTileData()
 {
 	return json::string_t(_terrainTileData["Grass"]["TexturePath"]);
+}
+
+void DataParser::SetData(TerrainTileType terrainTileType)
+{
+
 }

@@ -29,4 +29,6 @@ private:
 	TileData _rockData = {};
 	TileData _sandData = {};
 	TileData _waterData = {};
+
+	void SetData(TerrainTileType terrainTileType);
 };
