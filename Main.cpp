@@ -5,5 +5,5 @@ int main()
 {
     DataParser* dataParser = new DataParser();
     dataParser->Initialize();
-    std::cout << dataParser->GetTerrainTileData();
+    //dataParser->WriteDummyData();
 }

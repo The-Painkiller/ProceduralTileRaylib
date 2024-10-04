@@ -1,18 +1,56 @@
 {
   "Grass": {
-    "TexturePath": "Grass.png",
-    "Neighbours": "[Grass, Rock, Sand]"
+    "TexturePaths": [
+      "assets/Textures/Tile_Grass01.png",
+      "assets/Textures/Tile_Grass02.png"
+    ],
+    "Neighbours": [
+      0,
+      1,
+      2
+    ]
   },
   "Rock": {
-    "TexturePath": "Rock.png",
-    "Neighbours": "[Grass, Rock, Sand]"
+    "TexturePaths": [
+      "assets/Textures/Tile_Rock01.png",
+      "assets/Textures/Tile_Rock01.png"
+    ],
+    "Neighbours": [
+      0,
+      1,
+      2,
+      3
+    ]
   },
   "Sand": {
-    "TexturePath": "Sand.png",
-    "Neighbours": "[Grass, Rock, Sand, Water]"
+    "TexturePaths": [
+      "assets/Textures/Tile_Sand01.png",
+      "assets/Textures/Tile_Sand02.png"
+    ],
+    "Neighbours": [
+      0,
+      1,
+      2,
+      3
+    ]
   },
   "Water": {
-    "TexturePath": "Water.png",
-    "Neighbours": "[Water, Sand]"
+    "TexturePaths": [
+      "assets/Textures/Tile_Water01.png",
+      "assets/Textures/Tile_Water02.png"
+    ],
+    "Neighbours": [
+      0,
+      2,
+      3
+    ]
+  },
+  "InvalidTileType": {
+    "TexturePaths": [
+      "assets/Textures/Tile_Transparent.png"
+    ],
+    "Neighbours": [
+      -1
+    ]
   }
 }

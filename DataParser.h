@@ -9,8 +9,17 @@ using json = nlohmann::json;
 struct TileData 
 {
 public:
-	std::string TileTexturePaths[2];
-	TerrainTileType ValidNeighbours;
+	std::vector<std::string> TileTexturePaths;
+	std::vector<TerrainTileType> ValidNeighbours;
+};
+
+struct JSONData
+{
+public:
+	TileData Grass;
+	TileData Rock;
+	TileData Sand;
+	TileData Water;
 };
 
 class DataParser
@@ -18,17 +27,19 @@ class DataParser
 public:
 	DataParser() = default;
 	void Initialize();
-	std::string GetTerrainTileData();
 
 private:
 	json _terrainTileData;
 
 	const char* _terrainTileDataPath = "assets/JSON/TerrainTileData.json";
 
+	JSONData jsonData = {};
 	TileData _grassData = {};
 	TileData _rockData = {};
 	TileData _sandData = {};
 	TileData _waterData = {};
+	TileData _invalidTileData = {};
 
 	void SetData(TerrainTileType terrainTileType);
+	std::string GetTerrainTileTypeString(TerrainTileType type);
 };
