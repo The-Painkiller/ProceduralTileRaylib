@@ -4,6 +4,7 @@ TileManager::TileManager(int gridSizeX, int gridSizeY)
 {
 	_gridSizeX = gridSizeX;
 	_gridSizeY = gridSizeY;
+	_tiles.assign(_gridSizeX, std::vector<std::unique_ptr<BaseTile>>(_gridSizeY, std::unique_ptr<BaseTile>(new BaseTile(TerrainTileType::Grass, _gridSizeX))));
 }
 
 TileManager::~TileManager()

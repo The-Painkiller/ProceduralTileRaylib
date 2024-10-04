@@ -13,6 +13,7 @@ public:
 	void SetPossibilities(const TerrainTileType types[]);
 	void RemovePossibilityIfExists(const TerrainTileType type);
 	void ForceSetTile(const TerrainTileType type, const unsigned size);
+	void SetTransitionFlag(bool isTransitionTile);
 	TerrainTileType GetTerrainTileType();
 	bool IsTransitionTile();
 

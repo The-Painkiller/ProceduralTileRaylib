@@ -47,6 +47,11 @@ void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size)
 	_tilePossibilities.clear();
 }
 
+void BaseTile::SetTransitionFlag(bool isTransitionTile)
+{
+	_isTransitionTile = isTransitionTile;
+}
+
 TerrainTileType BaseTile::GetTerrainTileType()
 {
 	return _terrainTileType;

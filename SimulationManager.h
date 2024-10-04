@@ -11,7 +11,6 @@ public:
 
 private:
 	std::unique_ptr<DataParser> _dataParser;
-
 	std::unique_ptr<RenderManager> _renderManager;
 	std::unique_ptr<TileManager> _tileManager;
 

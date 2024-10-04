@@ -46,6 +46,25 @@ void DataParser::Initialize()
 	}
 }
 
+TileData DataParser::GetTileData(TerrainTileType tileType)
+{
+	switch (tileType)
+	{
+	case Rock:
+		return _rockData;
+	case Grass:
+		return _grassData;
+	case Sand:
+		return _sandData;
+	case Water:
+		return _waterData;
+	case TerrainTileTypeCount:
+	default:
+	case InvalidTileType:
+		return _invalidTileData;
+	}
+}
+
 void DataParser::SetData(TerrainTileType terrainTileType)
 {
 	TileData data = {};

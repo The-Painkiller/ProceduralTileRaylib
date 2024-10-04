@@ -27,6 +27,7 @@ class DataParser
 public:
 	DataParser() = default;
 	void Initialize();
+	TileData GetTileData(TerrainTileType tileType);
 
 private:
 	json _terrainTileData;
