@@ -1,6 +1,8 @@
 #pragma once
 #include"BaseTile.h"
 #include <raylib.h>
+#include <memory>
+#include <string>
 
 /// <summary>
 /// All char pointers are arrays of 2.
@@ -11,10 +13,10 @@ struct TileRenderData
 {
 public:
 	static unsigned int TextureArraySize;
-	char* GrassTexturePaths[2];
-	char* RockTexturePaths[2];
-	char* SandTexturePaths[2];
-	char* WaterTexturePaths[2];
+	std::vector<std::string> GrassTexturePaths;
+	std::vector<std::string> RockTexturePaths;
+	std::vector<std::string> SandTexturePaths;
+	std::vector<std::string> WaterTexturePaths;
 };
 
 class RenderManager
@@ -22,9 +24,13 @@ class RenderManager
 public:
 	RenderManager() = delete;
 	RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY);
+	~RenderManager();
 
 	void Initialize(TileRenderData renderData);
-	void RenderLoop(BaseTile** tileArray);
+	void RenderLoop();
+	void RefreshTileGrid(const std::vector<std::vector<std::shared_ptr<BaseTile>>> tileGrid);
+	bool ShouldGraphicsWindowClose();
+	void CloseGraphicsWindow();
 
 private:
 	Vector2 _gridSize;
@@ -32,6 +38,8 @@ private:
 	
 	unsigned int _screenHeight;
 	unsigned int _screenWidth;
+
+	std::vector<std::vector<std::shared_ptr<BaseTile>>> _tilesGrid;
 	
 	TileRenderData _tileRenderData = {};
 
@@ -45,6 +53,6 @@ private:
 	Texture2D _invalidTerrainTexture = Texture2D();
 	
 	void LoadRenderData();
-	void DrawTileGrid(BaseTile** tileArray);
+	void DrawTileGrid();
 	void DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY);
 };

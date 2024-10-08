@@ -11,9 +11,10 @@ public:
 	~TileManager();
 
 	void InitializeTileGrid();
+	std::vector<std::vector<std::shared_ptr<BaseTile>>>& GetTileArray();
 
 private:
 	int _gridSizeX = 0;
 	int _gridSizeY = 0;
-	std::vector<std::vector<std::unique_ptr<BaseTile>>> _tiles;
+	std::vector<std::vector<std::shared_ptr<BaseTile>>> _tiles;
 };

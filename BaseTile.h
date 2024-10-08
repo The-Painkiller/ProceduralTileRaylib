@@ -5,7 +5,7 @@
 class BaseTile
 {
 public:
-	BaseTile() = delete;
+	BaseTile() = default;
 	BaseTile(TerrainTileType tileType, unsigned int size);
 	~BaseTile();
 

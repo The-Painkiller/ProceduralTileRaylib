@@ -1,9 +1,11 @@
 #include <iostream>
-#include "DataParser.h"
-
+#include "SimulationManager.h"
 int main()
 {
-    DataParser* dataParser = new DataParser();
-    dataParser->Initialize();
-    //dataParser->WriteDummyData();
+    SimulationManager* simulationManager = new SimulationManager();
+    simulationManager->InitializeComponents();
+	if (!simulationManager->SimulationLoop())
+	{
+		return false;
+	}
 }
