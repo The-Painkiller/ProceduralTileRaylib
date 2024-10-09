@@ -12,6 +12,11 @@ bool SimulationManager::SimulationLoop()
 	while (!_renderManager->ShouldGraphicsWindowClose())
 	{
 		_renderManager->RenderLoop();
+
+		if (_tileManager->ReiteratePossibilities())
+		{
+			_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
+		}
 	}
 
 	_renderManager->CloseGraphicsWindow();
@@ -23,15 +28,19 @@ void SimulationManager::InitializeComponents()
 	_dataParser->Initialize();
 	_tileManager->InitializeTileGrid();
 
+	_tileManager->GetTileArray()[5][5].get()->ForceSetTile(Rock, TileSizeX);
+	_tileManager->GetTileArray()[1][19].get()->ForceSetTile(Water, TileSizeX);
+
 	TileRenderData renderData = {};
-	TileRenderData::TextureArraySize = 2;
-	for (int i = 0; i < TileRenderData::TextureArraySize; i++)
-	{
-		renderData.GrassTexturePaths.push_back(_dataParser->GetTileData(Grass).TileTexturePaths[i]);
-		renderData.RockTexturePaths.push_back(_dataParser->GetTileData(Rock).TileTexturePaths[i]);
-		renderData.SandTexturePaths.push_back(_dataParser->GetTileData(Sand).TileTexturePaths[i]);
-		renderData.WaterTexturePaths.push_back(_dataParser->GetTileData(Grass).TileTexturePaths[i]);
-	}
+	renderData.GrassTexturePath = _dataParser->GetTileData(Grass).TileTexturePath;
+	renderData.RockTexturePath = _dataParser->GetTileData(Rock).TileTexturePath;
+	renderData.SandTexturePath = _dataParser->GetTileData(Sand).TileTexturePath;
+	renderData.WaterTexturePath = _dataParser->GetTileData(Water).TileTexturePath;
+	renderData.RockGrassTexturePath = _dataParser->GetTileData(RockGrassTransition).TileTexturePath;
+	renderData.RockSandTexturePath = _dataParser->GetTileData(RockSandTransition).TileTexturePath;
+	renderData.RockWaterTexturePath = _dataParser->GetTileData(RockWaterTransition).TileTexturePath;
+	renderData.SandGrassTexturePath = _dataParser->GetTileData(SandGrassTransition).TileTexturePath;
+	renderData.SandWaterTexturePath = _dataParser->GetTileData(SandWaterTransition).TileTexturePath;
 
 	_renderManager->Initialize(renderData);
 	_renderManager->RefreshTileGrid(_tileManager->GetTileArray());

@@ -39,6 +39,9 @@
     <ClCompile Include="RenderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimulationManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTile.h">
@@ -56,40 +59,43 @@
     <ClInclude Include="RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\Textures\Tile_Grass01.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Grass02.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Rock01.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Rock02.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Sand01.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Sand02.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Transparent.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Water01.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="assets\Textures\Tile_Water02.png">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
+    <ClInclude Include="SimulationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\JSON\TerrainTileData.json">
       <Filter>Resource Files\JSON</Filter>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\Textures\Tile_Grass.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_Rock.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_RockGrass.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_RockSand.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_RockWater.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_Sand.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_SandGrass.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_SandWater.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_Water.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -26,6 +26,16 @@ void TileManager::InitializeTileGrid()
 	}
 }
 
+bool TileManager::ReiteratePossibilities()
+{
+	//main fun happens here.
+	//if(any change) return true;
+
+
+
+	return false;
+}
+
 std::vector<std::vector<std::shared_ptr<BaseTile>>>& TileManager::GetTileArray()
 {
 	return _tiles;

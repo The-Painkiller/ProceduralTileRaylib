@@ -11,6 +11,7 @@ public:
 	~TileManager();
 
 	void InitializeTileGrid();
+	bool ReiteratePossibilities();
 	std::vector<std::vector<std::shared_ptr<BaseTile>>>& GetTileArray();
 
 private:

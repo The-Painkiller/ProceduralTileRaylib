@@ -7,7 +7,7 @@ void to_json(json& JSON, const JSONData& data)
 			"Grass",
 			{
 				"TexturePaths",
-				data.Grass.TileTexturePaths
+				data.Grass.TileTexturePath
 			},
 			{
 				"Neighbours",
@@ -18,7 +18,7 @@ void to_json(json& JSON, const JSONData& data)
 			"Rock",
 			{
 				"TexturePaths",
-				data.Rock.TileTexturePaths
+				data.Rock.TileTexturePath
 			},
 			{
 				"Neighbours",
@@ -74,7 +74,7 @@ void DataParser::SetData(TerrainTileType terrainTileType)
 
 	for (auto& texture : dataTexturePaths)
 	{
-		data.TileTexturePaths.push_back(texture);
+		data.TileTexturePath = texture;
 	}
 
 	for (auto& neighbour : dataNeighbours)
@@ -126,6 +126,16 @@ std::string DataParser::GetTerrainTileTypeString(TerrainTileType type)
 		return "Sand";
 	case Water:
 		return "Water";
+	case RockGrassTransition:
+		return "RockGrass";
+	case RockSandTransition:
+		return "RockSand";
+	case RockWaterTransition:
+		return "RockWater";
+	case SandGrassTransition:
+		return "SandGrass";
+	case SandWaterTransition:
+		return "SandWater";
 	case TerrainTileTypeCount:
 		return "TerrainTileTypeCount";
 	}

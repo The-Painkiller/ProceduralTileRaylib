@@ -1,7 +1,5 @@
 #include "RenderManager.h"
 
-unsigned int TileRenderData::TextureArraySize = 2;
-
 RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY)
 {
 	_gridSize.x = gridSizeX;
@@ -25,13 +23,10 @@ RenderManager::~RenderManager()
 	_camera = {};
 	_tileRenderData = {};
 
-	for (int i = 0; i < TileRenderData::TextureArraySize; i++)
-	{
-		_grassTextures[i] = {};
-		_sandTextures[i] = {};
-		_waterTextures[i] = {};
-		_rockTextures[i] = {};
-	}
+		_grassTexture = {};
+		_sandTexture = {};
+		_waterTexture = {};
+		_rockTexture = {};
 }
 
 void RenderManager::RenderLoop()
@@ -57,27 +52,51 @@ void RenderManager::DrawTileGrid()
 
 void RenderManager::DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY)
 {
-	int textureIndex = isTransitionTile ? 1 : 0;
 	switch (tileType)
 	{
 	case Rock:
 	{
-		DrawTexture(_rockTextures[textureIndex], gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_rockTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
 		break;
 	}
 	case Grass:
 	{
-		DrawTexture(_grassTextures[textureIndex], gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_grassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
 		break;
 	}
 	case Sand:
 	{
-		DrawTexture(_sandTextures[textureIndex], gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_sandTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
 		break;
 	}
 	case Water:
 	{
-		DrawTexture(_waterTextures[textureIndex], gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_waterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		break;
+	}
+	case RockGrassTransition:
+	{
+		DrawTexture(_rockGrassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		break;
+	}
+	case RockSandTransition:
+	{
+		DrawTexture(_rockSandTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		break;
+	}
+	case RockWaterTransition:
+	{
+		DrawTexture(_rockWaterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		break;
+	}
+	case SandGrassTransition:
+	{
+		DrawTexture(_sandGrassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		break;
+	}
+	case SandWaterTransition:
+	{
+		DrawTexture(_sandWaterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
 		break;
 	}
 	case TerrainTileTypeCount:
@@ -113,11 +132,13 @@ void RenderManager::CloseGraphicsWindow()
 
 void RenderManager::LoadRenderData()
 {
-	for (int i = 0; i < TileRenderData::TextureArraySize; i++)
-	{
-		_grassTextures[i] = LoadTexture(_tileRenderData.GrassTexturePaths[i].c_str());
-		_sandTextures[i] = LoadTexture(_tileRenderData.SandTexturePaths[i].c_str());
-		_waterTextures[i] = LoadTexture(_tileRenderData.WaterTexturePaths[i].c_str());
-		_rockTextures[i] = LoadTexture(_tileRenderData.RockTexturePaths[i].c_str());
-	}
+	_grassTexture = LoadTexture(_tileRenderData.GrassTexturePath.c_str());
+	_sandTexture = LoadTexture(_tileRenderData.SandTexturePath.c_str());
+	_waterTexture = LoadTexture(_tileRenderData.WaterTexturePath.c_str());
+	_rockTexture = LoadTexture(_tileRenderData.RockTexturePath.c_str());
+	_rockGrassTexture = LoadTexture(_tileRenderData.RockGrassTexturePath.c_str());
+	_rockSandTexture = LoadTexture(_tileRenderData.RockSandTexturePath.c_str());
+	_rockWaterTexture = LoadTexture(_tileRenderData.RockWaterTexturePath.c_str());
+	_sandGrassTexture = LoadTexture(_tileRenderData.SandGrassTexturePath.c_str());
+	_sandWaterTexture = LoadTexture(_tileRenderData.SandWaterTexturePath.c_str());
 }

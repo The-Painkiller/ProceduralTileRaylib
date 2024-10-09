@@ -1,56 +1,102 @@
 {
   "Grass": {
-    "TexturePaths": [
-      "assets/Textures/Tile_Grass01.png",
-      "assets/Textures/Tile_Grass02.png"
-    ],
+    "TexturePaths": "assets/Textures/Tile_Grass.png",
     "Neighbours": [
       0,
       1,
-      2
+      2,
+      6,
+      7
     ]
   },
   "Rock": {
-    "TexturePaths": [
-      "assets/Textures/Tile_Rock01.png",
-      "assets/Textures/Tile_Rock01.png"
-    ],
+    "TexturePaths": "assets/Textures/Tile_Rock.png",
     "Neighbours": [
       0,
       1,
       2,
-      3
+      3,
+      4,
+      5,
+      6
     ]
   },
   "Sand": {
-    "TexturePaths": [
-      "assets/Textures/Tile_Sand01.png",
-      "assets/Textures/Tile_Sand02.png"
-    ],
+    "TexturePaths": "assets/Textures/Tile_Sand.png",
     "Neighbours": [
       0,
       1,
       2,
-      3
+      3,
+      4,
+      7,
+      8
     ]
   },
   "Water": {
-    "TexturePaths": [
-      "assets/Textures/Tile_Water01.png",
-      "assets/Textures/Tile_Water02.png"
-    ],
+    "TexturePaths": "assets/Textures/Tile_Water.png",
     "Neighbours": [
       0,
       2,
-      3
+      3,
+      5,
+      8
     ]
   },
-  "InvalidTileType": {
-    "TexturePaths": [
-      "assets/Textures/Tile_Transparent.png"
-    ],
+  "RockWater": {
+    "TexturePaths": "assets/Textures/Tile_RockWater.png",
     "Neighbours": [
-      -1
+      0,
+      1,
+      3,
+      5,
+      4,
+      6
+    ]
+  },
+  "RockGrass": {
+    "TexturePaths": "assets/Textures/Tile_RockGrass.png",
+    "Neighbours": [
+      0,
+      1,
+      6,
+      5,
+      4,
+      7
+    ]
+  },
+  "RockSand": {
+    "TexturePaths": "assets/Textures/Tile_RockSand.png",
+    "Neighbours": [
+      0,
+      2,
+      1,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "SandGrass": {
+    "TexturePaths": "assets/Textures/Tile_SandGrass.png",
+    "Neighbours": [
+      1,
+      2,
+      7,
+      6,
+      4,
+      8
+    ]
+  },
+  "SandWater": {
+    "TexturePaths": "assets/Textures/Tile_SandWater.png",
+    "Neighbours": [
+      2,
+      3,
+      8,
+      4,
+      7
     ]
   }
 }

@@ -9,7 +9,7 @@ using json = nlohmann::json;
 struct TileData 
 {
 public:
-	std::vector<std::string> TileTexturePaths;
+	std::string TileTexturePath;
 	std::vector<TerrainTileType> ValidNeighbours;
 };
 

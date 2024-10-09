@@ -164,15 +164,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\Textures\Tile_Grass01.png" />
-    <Image Include="assets\Textures\Tile_Grass02.png" />
-    <Image Include="assets\Textures\Tile_Rock01.png" />
-    <Image Include="assets\Textures\Tile_Rock02.png" />
-    <Image Include="assets\Textures\Tile_Sand01.png" />
-    <Image Include="assets\Textures\Tile_Sand02.png" />
-    <Image Include="assets\Textures\Tile_Transparent.png" />
-    <Image Include="assets\Textures\Tile_Water01.png" />
-    <Image Include="assets\Textures\Tile_Water02.png" />
+    <Image Include="assets\Textures\Tile_Grass.png" />
+    <Image Include="assets\Textures\Tile_Rock.png" />
+    <Image Include="assets\Textures\Tile_RockGrass.png" />
+    <Image Include="assets\Textures\Tile_RockSand.png" />
+    <Image Include="assets\Textures\Tile_RockWater.png" />
+    <Image Include="assets\Textures\Tile_Sand.png" />
+    <Image Include="assets\Textures\Tile_SandGrass.png" />
+    <Image Include="assets\Textures\Tile_SandWater.png" />
+    <Image Include="assets\Textures\Tile_Water.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

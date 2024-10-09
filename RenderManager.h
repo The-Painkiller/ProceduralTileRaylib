@@ -12,11 +12,15 @@
 struct TileRenderData
 {
 public:
-	static unsigned int TextureArraySize;
-	std::vector<std::string> GrassTexturePaths;
-	std::vector<std::string> RockTexturePaths;
-	std::vector<std::string> SandTexturePaths;
-	std::vector<std::string> WaterTexturePaths;
+	std::string GrassTexturePath;
+	std::string RockTexturePath;
+	std::string SandTexturePath;
+	std::string WaterTexturePath;
+	std::string RockWaterTexturePath;
+	std::string RockSandTexturePath;
+	std::string RockGrassTexturePath;
+	std::string SandWaterTexturePath;
+	std::string SandGrassTexturePath;
 };
 
 class RenderManager
@@ -46,10 +50,15 @@ private:
 	float _mouseWheelScroll = 0.0f;
 	Camera2D _camera = {};
 
-	Texture2D _grassTextures[2] = {};
-	Texture2D _waterTextures[2] = {};
-	Texture2D _sandTextures[2] = {};
-	Texture2D _rockTextures[2] = {};
+	Texture2D _grassTexture = {};
+	Texture2D _waterTexture = {};
+	Texture2D _sandTexture = {};
+	Texture2D _rockTexture = {};
+	Texture2D _rockGrassTexture = {};
+	Texture2D _rockSandTexture = {};
+	Texture2D _rockWaterTexture = {};
+	Texture2D _sandWaterTexture = {};
+	Texture2D _sandGrassTexture = {};
 	Texture2D _invalidTerrainTexture = Texture2D();
 	
 	void LoadRenderData();
