@@ -1,41 +1,22 @@
 #include "DataParser.h"
 
-void to_json(json& JSON, const JSONData& data)
+DataParser::~DataParser()
 {
-	JSON = {
-		{
-			"Grass",
-			{
-				"TexturePaths",
-				data.Grass.TileTexturePath
-			},
-			{
-				"Neighbours",
-				data.Grass.ValidNeighbours
-			}
-		},
-		{
-			"Rock",
-			{
-				"TexturePaths",
-				data.Rock.TileTexturePath
-			},
-			{
-				"Neighbours",
-				data.Rock.ValidNeighbours
-			}
-		}
+	_terrainTileDataPath = nullptr;
+	delete _terrainTileDataPath;
 
-	};
+	_tileData.clear();
+	_terrainTileDataJson = {};
 }
 
 void DataParser::Initialize()
 {
+	_tileData = std::vector<TileData>(TerrainTileTypeCount);
 	std::ifstream ifs;
 	ifs.open(_terrainTileDataPath, std::ifstream::in);
 	if (ifs.is_open())
 	{
-		_terrainTileData = json::parse(ifs);
+		_terrainTileDataJson = json::parse(ifs);
 	}
 	ifs.close();
 
@@ -48,27 +29,13 @@ void DataParser::Initialize()
 
 TileData DataParser::GetTileData(TerrainTileType tileType)
 {
-	switch (tileType)
-	{
-	case Rock:
-		return _rockData;
-	case Grass:
-		return _grassData;
-	case Sand:
-		return _sandData;
-	case Water:
-		return _waterData;
-	case TerrainTileTypeCount:
-	default:
-	case InvalidTileType:
-		return _invalidTileData;
-	}
+	return _tileData[tileType];
 }
 
 void DataParser::SetData(TerrainTileType terrainTileType)
 {
 	TileData data = {};
-	auto dataRoot = _terrainTileData[GetTerrainTileTypeString(terrainTileType)];
+	auto dataRoot = _terrainTileDataJson[GetTerrainTileTypeString(terrainTileType)];
 	auto dataTexturePaths = dataRoot["TexturePaths"];
 	auto dataNeighbours = dataRoot["Neighbours"];
 
@@ -81,33 +48,14 @@ void DataParser::SetData(TerrainTileType terrainTileType)
 	{
 		data.ValidNeighbours.push_back(neighbour);
 	}
+
 	switch (terrainTileType)
 	{
-	case Rock:
-	{
-		_rockData = data;
-		break;
-	}
-	case Grass:
-	{
-		_grassData = data;
-		break;
-	}
-	case Sand:
-	{
-		_sandData = data;
-		break;
-	}
-	case Water:
-	{
-		_waterData = data;
-		break;
-	}
-
 	case InvalidTileType:
-	case TerrainTileTypeCount:
+		break;
 	default:
-		_invalidTileData = data;
+		_tileData[terrainTileType] = data;
+		_tileData[terrainTileType].TileType = terrainTileType;
 		break;
 	}
 }
@@ -116,8 +64,6 @@ std::string DataParser::GetTerrainTileTypeString(TerrainTileType type)
 {
 	switch (type)
 	{
-	case InvalidTileType:
-		return "InvalidTileType";
 	case Rock:
 		return "Rock";
 	case Grass:
@@ -138,5 +84,7 @@ std::string DataParser::GetTerrainTileTypeString(TerrainTileType type)
 		return "SandWater";
 	case TerrainTileTypeCount:
 		return "TerrainTileTypeCount";
+	default:
+		return "InvalidTileType";
 	}
 }

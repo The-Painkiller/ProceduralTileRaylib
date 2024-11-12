@@ -2,9 +2,9 @@
 
 SimulationManager::SimulationManager()
 {
-	_dataParser = std::unique_ptr<DataParser>(new DataParser());
-	_tileManager = std::unique_ptr<TileManager>(new TileManager(GridSizeX, GridSizeY));
-	_renderManager = std::unique_ptr<RenderManager>(new RenderManager(GridSizeX, GridSizeY, TileSizeX, TileSizeY));
+	_dataParser = std::shared_ptr<DataParser>(new DataParser());
+	_tileManager = std::unique_ptr<TileManager>(new TileManager(GridSizeX, GridSizeY, _dataParser));
+	_renderManager = std::unique_ptr<RenderManager>(new RenderManager(GridSizeX, GridSizeY, GlobalHeader::TileSize));
 }
 
 bool SimulationManager::SimulationLoop()
@@ -13,10 +13,10 @@ bool SimulationManager::SimulationLoop()
 	{
 		_renderManager->RenderLoop();
 
-		if (_tileManager->ReiteratePossibilities())
-		{
-			_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
-		}
+		//if (_tileManager->Obervation()
+		//{
+		//	_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
+		//}
 	}
 
 	_renderManager->CloseGraphicsWindow();
@@ -27,9 +27,6 @@ void SimulationManager::InitializeComponents()
 {
 	_dataParser->Initialize();
 	_tileManager->InitializeTileGrid();
-
-	_tileManager->GetTileArray()[5][5].get()->ForceSetTile(Rock, TileSizeX);
-	_tileManager->GetTileArray()[1][19].get()->ForceSetTile(Water, TileSizeX);
 
 	TileRenderData renderData = {};
 	renderData.GrassTexturePath = _dataParser->GetTileData(Grass).TileTexturePath;
@@ -44,4 +41,8 @@ void SimulationManager::InitializeComponents()
 
 	_renderManager->Initialize(renderData);
 	_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
+	
+	
+	_tileManager->ForceTileEntropy(Vector2{ 5, 5 }, Rock, _dataParser->GetTileData(Rock).ValidNeighbours);
+	_tileManager->ForceTileEntropy(Vector2{ 1, 19 }, Water, _dataParser->GetTileData(Water).ValidNeighbours);
 }

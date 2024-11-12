@@ -10,46 +10,59 @@ BaseTile::~BaseTile()
 {
 	_tileSize = 0;
 	_terrainTileType = TerrainTileType::InvalidTileType;
-	_tilePossibilities.clear();	
+	_tileEntropies.clear();	
 }
 
-void BaseTile::SetPossibilities()
+void BaseTile::SetEntropy()
 {
 	for (int i = 0; i < TerrainTileType::TerrainTileTypeCount; i++)
 	{
-		_tilePossibilities.push_back((TerrainTileType)i);
+		_tileEntropies.push_back((TerrainTileType)i);
 	}
 }
 
-void BaseTile::SetPossibilities(const TerrainTileType types[])
+void BaseTile::SetEntropy(const TerrainTileType types[])
 {
 	int typesCount = sizeof(types) / sizeof(types[0]);
 	for (int i = 0; i < typesCount; i++)
 	{
-		_tilePossibilities.push_back(types[i]);
+		_tileEntropies.push_back(types[i]);
 	}
 }
 
-void BaseTile::RemovePossibilityIfExists(TerrainTileType type)
+void BaseTile::RemoveEntropyIfExists(TerrainTileType type)
 {
-	auto iter = std::find(_tilePossibilities.begin(), _tilePossibilities.end(), type);
-	
-	if (iter != _tilePossibilities.end())
+	if (_tileEntropies.size() <= 0)
 	{
-		_tilePossibilities.erase(iter);
+		return;
+	}
+
+	auto iter = std::find(_tileEntropies.begin(), _tileEntropies.end(), type);
+	
+	if (iter != _tileEntropies.end())
+	{
+		_tileEntropies.erase(iter);
 	}
 }
 
-void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size)
+void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size, const std::vector<TerrainTileType>& validNeighbours)
 {
 	_terrainTileType = type;
 	_tileSize = size;
-	_tilePossibilities.clear();
+	_tileEntropies.clear();
+	_tileEntropies.push_back(type);
 }
 
 void BaseTile::SetTransitionFlag(bool isTransitionTile)
 {
 	_isTransitionTile = isTransitionTile;
+}
+
+std::vector<TerrainTileType>& BaseTile::IntersectNeighbourWithEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
+{
+	std::vector<TerrainTileType> intersectionOfTileTypes;
+	std::set_intersection(_tileEntropies.begin(), _tileEntropies.end(), validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), intersectionOfTileTypes);
+	return intersectionOfTileTypes;
 }
 
 TerrainTileType BaseTile::GetTerrainTileType()
@@ -60,4 +73,39 @@ TerrainTileType BaseTile::GetTerrainTileType()
 bool BaseTile::IsTransitionTile()
 {
 	return _isTransitionTile;
+}
+
+int BaseTile::GetEntropyCount()
+{
+	return _tileEntropies.size();
+}
+
+int BaseTile::GetValidNeighbourCount()
+{
+	return _validNeighbours.size();
+}
+
+TerrainTileType BaseTile::GetEntropy(int index)
+{
+	if (_tileEntropies.size() == 0)
+	{
+		return TerrainTileType::InvalidTileType;
+	}
+
+	return _tileEntropies[index];
+}
+
+TerrainTileType BaseTile::GetValidNeighbour(int index)
+{
+	if (_validNeighbours.size() == 0)
+	{
+		return TerrainTileType::InvalidTileType;
+	}
+
+	return _validNeighbours[index];
+}
+
+std::vector<TerrainTileType>& BaseTile::GetValidNeighbours()
+{
+	return _validNeighbours;
 }

@@ -13,12 +13,11 @@ public:
 	bool SimulationLoop();
 
 private:
-	std::unique_ptr<DataParser> _dataParser;
+	std::shared_ptr<DataParser> _dataParser;
 	std::unique_ptr<RenderManager> _renderManager;
 	std::unique_ptr<TileManager> _tileManager;
 
 	const int GridSizeX = 20;
 	const int GridSizeY = 20;
-	const int TileSizeX = 64;
-	const int TileSizeY = 64;
+	const int TileSize = 64;
 };

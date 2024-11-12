@@ -1,14 +1,13 @@
 #include "RenderManager.h"
 
-RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY)
+RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSize)
 {
 	_gridSize.x = gridSizeX;
 	_gridSize.y = gridSizeY;
 
-	_tileSize.x = tileSizeX;
-	_tileSize.y = tileSizeY;
-	_screenWidth = tileSizeX * gridSizeX;
-	_screenHeight = tileSizeY * gridSizeY;
+	_tileSize = tileSize;
+	_screenWidth = tileSize * gridSizeX;
+	_screenHeight = tileSize * gridSizeY;
 
 	_camera.rotation = 0.0f;
 	_camera.zoom = 1.0f;
@@ -56,54 +55,54 @@ void RenderManager::DrawTile(TerrainTileType tileType, bool isTransitionTile, in
 	{
 	case Rock:
 	{
-		DrawTexture(_rockTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_rockTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case Grass:
 	{
-		DrawTexture(_grassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_grassTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case Sand:
 	{
-		DrawTexture(_sandTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_sandTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case Water:
 	{
-		DrawTexture(_waterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_waterTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case RockGrassTransition:
 	{
-		DrawTexture(_rockGrassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_rockGrassTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case RockSandTransition:
 	{
-		DrawTexture(_rockSandTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_rockSandTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case RockWaterTransition:
 	{
-		DrawTexture(_rockWaterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_rockWaterTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case SandGrassTransition:
 	{
-		DrawTexture(_sandGrassTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_sandGrassTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case SandWaterTransition:
 	{
-		DrawTexture(_sandWaterTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_sandWaterTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	case TerrainTileTypeCount:
 	case InvalidTileType:
 	default:
 	{
-		DrawTexture(_invalidTerrainTexture, gridX * _tileSize.x, gridY * _tileSize.y, WHITE);
+		DrawTexture(_invalidTerrainTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
 	}

@@ -9,37 +9,25 @@ using json = nlohmann::json;
 struct TileData 
 {
 public:
+	TerrainTileType TileType;
 	std::string TileTexturePath;
 	std::vector<TerrainTileType> ValidNeighbours;
-};
-
-struct JSONData
-{
-public:
-	TileData Grass;
-	TileData Rock;
-	TileData Sand;
-	TileData Water;
 };
 
 class DataParser
 {
 public:
 	DataParser() = default;
+	~DataParser();
 	void Initialize();
 	TileData GetTileData(TerrainTileType tileType);
 
 private:
-	json _terrainTileData;
+	json _terrainTileDataJson;
 
 	const char* _terrainTileDataPath = "assets/JSON/TerrainTileData.json";
 
-	JSONData jsonData = {};
-	TileData _grassData = {};
-	TileData _rockData = {};
-	TileData _sandData = {};
-	TileData _waterData = {};
-	TileData _invalidTileData = {};
+	std::vector<TileData> _tileData;
 
 	void SetData(TerrainTileType terrainTileType);
 	std::string GetTerrainTileTypeString(TerrainTileType type);

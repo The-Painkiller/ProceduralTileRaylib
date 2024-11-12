@@ -27,7 +27,7 @@ class RenderManager
 {
 public:
 	RenderManager() = delete;
-	RenderManager(int gridSizeX, int gridSizeY, int tileSizeX, int tileSizeY);
+	RenderManager(int gridSizeX, int gridSizeY, int tileSize);
 	~RenderManager();
 
 	void Initialize(TileRenderData renderData);
@@ -38,7 +38,7 @@ public:
 
 private:
 	Vector2 _gridSize;
-	Vector2 _tileSize;
+	int _tileSize;
 	
 	unsigned int _screenHeight;
 	unsigned int _screenWidth;
