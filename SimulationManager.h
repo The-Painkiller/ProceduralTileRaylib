@@ -17,7 +17,7 @@ private:
 	std::unique_ptr<RenderManager> _renderManager;
 	std::unique_ptr<TileManager> _tileManager;
 
-	const int GridSizeX = 20;
-	const int GridSizeY = 20;
+	const int GridSizeX = 10;
+	const int GridSizeY = 10;
 	const int TileSize = 64;
 };

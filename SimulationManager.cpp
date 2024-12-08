@@ -44,5 +44,5 @@ void SimulationManager::InitializeComponents()
 	
 	
 	_tileManager->ForceTileEntropy(Vector2{ 5, 5 }, Rock, _dataParser->GetTileData(Rock).ValidNeighbours);
-	_tileManager->ForceTileEntropy(Vector2{ 1, 19 }, Water, _dataParser->GetTileData(Water).ValidNeighbours);
+	_tileManager->ForceTileEntropy(Vector2{ 1, 3 }, Water, _dataParser->GetTileData(Water).ValidNeighbours);
 }

@@ -23,6 +23,8 @@ void TileManager::InitializeTileGrid()
 		{
 			_tiles[i][j] = std::shared_ptr<BaseTile>(new BaseTile(Grass, 256));
 			_tiles[i][j].get()->SetEntropy();
+
+			_tiles[i][j].get()->SetValidNeighbours(_dataParser.get()->GetTileData(_tiles[i][j].get()->GetTerrainTileType()).ValidNeighbours);
 		}
 	}
 }
@@ -39,20 +41,19 @@ void TileManager::Obervation(const Vector2 tileLocation, BaseTile& neighbourTile
 		return;
 	}
 
-	if (_tiles[tileLocation.x][tileLocation.y].get()->GetEntropyCount() == 1)
+	TerrainTileType currentTileType = _tiles[tileLocation.x][tileLocation.y].get()->GetTerrainTileType();
+	auto iter = std::find(neighbourTileWithEntropyOne.GetValidNeighbours().begin(), neighbourTileWithEntropyOne.GetValidNeighbours().end(), currentTileType);
+	
+	///if the current tile type of this tile is among the list of valid neighbours of the tile passed, then do nothing.
+	if (iter != neighbourTileWithEntropyOne.GetValidNeighbours().end())
 	{
-		///check if it complies otherwise change.
+		return;
 	}
 
-	std::vector<TerrainTileType> intersectedEntropy = _tiles[tileLocation.x][tileLocation.y].get()->IntersectNeighbourWithEntropy(neighbourTileWithEntropyOne.GetValidNeighbours());
-	if (intersectedEntropy.size() == 0)
-	{
-		_tiles[tileLocation.x][tileLocation.y].get()->ForceSetTile(neighbourTileWithEntropyOne.GetValidNeighbour(0), GlobalHeader::TileSize ,_dataParser.get()->GetTileData(neighbourTileWithEntropyOne.GetValidNeighbour(0)).ValidNeighbours);
-	}
-	else
-	{
-		_tiles[tileLocation.x][tileLocation.y].get()->ForceSetTile(_tiles[tileLocation.x][tileLocation.y].get()->GetEntropy(0), GlobalHeader::TileSize, _dataParser.get()->GetTileData(_tiles[tileLocation.x][tileLocation.y].get()->GetEntropy(0)).ValidNeighbours);
-	}
+	///check if validNeighours.size > 1.
+	///if Yes: choose at random else force the 1.
+	/// Call ForceTileEntropy here somehow so it runs recursively.
+	auto validNeighbours = _tiles[tileLocation.x][tileLocation.y].get()->UpdateEntropy(neighbourTileWithEntropyOne.GetValidNeighbours());
 }
 
 std::vector<std::vector<std::shared_ptr<BaseTile>>>& TileManager::GetTileArray()
@@ -70,8 +71,19 @@ void TileManager::ForceTileEntropy(const Vector2 tileLocation, const TerrainTile
 
 	_tiles[tileLocation.x][tileLocation.y]->ForceSetTile(type, GlobalHeader::TileSize, validNeighbours);
 
-	TileManager::Obervation(const Vector2{ tileLocation.x - 1, tileLocation.y }, *_tiles[tileLocation.x][tileLocation.y].get());
-	TileManager::Obervation(const Vector2{ tileLocation.x + 1, tileLocation.y }, *_tiles[tileLocation.x][tileLocation.y].get());
-	TileManager::Obervation(const Vector2{ tileLocation.x, tileLocation.y - 1 }, *_tiles[tileLocation.x][tileLocation.y].get());
-	TileManager::Obervation(const Vector2{ tileLocation.x, tileLocation.y + 1 }, *_tiles[tileLocation.x][tileLocation.y].get());
+	TileManager::Obervation(Vector2{ tileLocation.x - 1, tileLocation.y }, *_tiles[tileLocation.x][tileLocation.y].get());
+	TileManager::Obervation(Vector2{ tileLocation.x + 1, tileLocation.y }, *_tiles[tileLocation.x][tileLocation.y].get());
+	TileManager::Obervation(Vector2{ tileLocation.x, tileLocation.y - 1 }, *_tiles[tileLocation.x][tileLocation.y].get());
+	TileManager::Obervation(Vector2{ tileLocation.x, tileLocation.y + 1 }, *_tiles[tileLocation.x][tileLocation.y].get());
+}
+
+void TileManager::CalculateEntropies()
+{
+}
+
+void TileManager::CollapseEntropies(const Vector2 tileLocation, const std::vector<TerrainTileType> entropies)
+{
+	//TerrainTileType entropy = _tiles[tileLocation.x][tileLocation.y].get()->GetEntropy(0);
+	////_tiles[tileLocation.x][tileLocation.y].get()->ForceSetTile(entropy, GlobalHeader::TileSize, _dataParser.get()->GetTileData(neighbourTileWithEntropyOne.GetValidNeighbour(0)).ValidNeighbours);
+	//ForceTileEntropy(Vector2{ tileLocation.x, tileLocation.y }, entropy, _dataParser->GetTileData(entropy).ValidNeighbours);
 }

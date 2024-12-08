@@ -1,9 +1,11 @@
 #include "BaseTile.h"
+#include <iterator>
 
 BaseTile::BaseTile(TerrainTileType tileType, unsigned int size)
 {
 	_terrainTileType = tileType;
 	_tileSize = size;
+	//_validNeighbours = validNeighbours;
 }
 
 BaseTile::~BaseTile()
@@ -30,6 +32,11 @@ void BaseTile::SetEntropy(const TerrainTileType types[])
 	}
 }
 
+void BaseTile::SetValidNeighbours(const std::vector<TerrainTileType> validNeighbours)
+{
+	_validNeighbours = validNeighbours;
+}
+
 void BaseTile::RemoveEntropyIfExists(TerrainTileType type)
 {
 	if (_tileEntropies.size() <= 0)
@@ -51,6 +58,7 @@ void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size, con
 	_tileSize = size;
 	_tileEntropies.clear();
 	_tileEntropies.push_back(type);
+	_validNeighbours = validNeighbours;
 }
 
 void BaseTile::SetTransitionFlag(bool isTransitionTile)
@@ -58,11 +66,23 @@ void BaseTile::SetTransitionFlag(bool isTransitionTile)
 	_isTransitionTile = isTransitionTile;
 }
 
-std::vector<TerrainTileType>& BaseTile::IntersectNeighbourWithEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
+std::vector<TerrainTileType> BaseTile::UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
 {
-	std::vector<TerrainTileType> intersectionOfTileTypes;
-	std::set_intersection(_tileEntropies.begin(), _tileEntropies.end(), validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), intersectionOfTileTypes);
-	return intersectionOfTileTypes;
+	std::vector<TerrainTileType> intersection = std::vector<TerrainTileType>();
+	for (int i = 0; i < _tileEntropies.size(); i++)
+	{
+		if (std::find(validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), _tileEntropies[i]) != validNeighourListOfIncomingTile.end())
+		{
+			intersection.push_back(_tileEntropies[i]);
+		}
+	}
+
+	if (intersection.size() == 0)
+	{
+		intersection.push_back(validNeighourListOfIncomingTile[0]);
+	}
+	
+	return intersection;
 }
 
 TerrainTileType BaseTile::GetTerrainTileType()

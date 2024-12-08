@@ -17,7 +17,7 @@ public:
 	std::vector<std::vector<std::shared_ptr<BaseTile>>>& GetTileArray();
 	void ForceTileEntropy(const Vector2 tileLocation, const TerrainTileType type, const std::vector<TerrainTileType> validNeighbours);
 	void CalculateEntropies();
-	void CollapseLowestEntropies();
+	void CollapseEntropies(const Vector2 tileLocation, const std::vector<TerrainTileType> entropies);
 
 
 private:

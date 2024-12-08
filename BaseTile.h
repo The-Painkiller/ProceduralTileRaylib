@@ -12,6 +12,7 @@ public:
 
 	void SetEntropy();
 	void SetEntropy(const TerrainTileType types[]);
+	void SetValidNeighbours(const std::vector<TerrainTileType> validNeighbours);
 	void RemoveEntropyIfExists(const TerrainTileType type);
 	void ForceSetTile(const TerrainTileType type, const unsigned size, const std::vector<TerrainTileType>& validNeighbours);
 	void SetTransitionFlag(bool isTransitionTile);
@@ -22,7 +23,8 @@ public:
 	TerrainTileType GetEntropy(int index);
 	TerrainTileType GetValidNeighbour(int index);
 	std::vector<TerrainTileType>& GetValidNeighbours();
-	std::vector<TerrainTileType>& IntersectNeighbourWithEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
+	//std::vector<TerrainTileType>& IntersectNeighbourWithEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
+	std::vector<TerrainTileType> UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
 
 private:
 	TerrainTileType _terrainTileType = TerrainTileType::InvalidTileType;
