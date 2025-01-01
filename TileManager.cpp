@@ -31,15 +31,16 @@ void TileManager::InitializeTileGrid()
 
 void TileManager::Obervation(const Vector2 tileLocation, BaseTile& neighbourTileWithEntropyOne)
 {
-	if (tileLocation.x < 0 || tileLocation.y >= _tiles[tileLocation.x].size())
+	if (tileLocation.x < 0 || tileLocation.y < 0)
+	{
+		return;
+	}
+	
+	if (tileLocation.x >= _tiles.size() || tileLocation.y >= _tiles[tileLocation.x].size())
 	{
 		return;
 	}
 
-	if (tileLocation.x >= _tiles.size() || tileLocation.y < 0)
-	{
-		return;
-	}
 
 	TerrainTileType currentTileType = _tiles[tileLocation.x][tileLocation.y].get()->GetTerrainTileType();
 	auto iter = std::find(neighbourTileWithEntropyOne.GetValidNeighbours().begin(), neighbourTileWithEntropyOne.GetValidNeighbours().end(), currentTileType);
@@ -50,10 +51,19 @@ void TileManager::Obervation(const Vector2 tileLocation, BaseTile& neighbourTile
 		return;
 	}
 
+	auto validNeighbours = _tiles[tileLocation.x][tileLocation.y].get()->UpdateEntropy(neighbourTileWithEntropyOne.GetValidNeighbours());
+
 	///check if validNeighours.size > 1.
 	///if Yes: choose at random else force the 1.
-	/// Call ForceTileEntropy here somehow so it runs recursively.
-	auto validNeighbours = _tiles[tileLocation.x][tileLocation.y].get()->UpdateEntropy(neighbourTileWithEntropyOne.GetValidNeighbours());
+	if (validNeighbours.size() == 1)
+	{
+		ForceTileEntropy({ tileLocation.x, tileLocation.y }, validNeighbours[0], validNeighbours);
+	}
+	else
+	{
+		int rand = Utils::Random(0, validNeighbours.size());
+		ForceTileEntropy({ tileLocation.x, tileLocation.y }, validNeighbours[rand], validNeighbours);
+	}
 }
 
 std::vector<std::vector<std::shared_ptr<BaseTile>>>& TileManager::GetTileArray()

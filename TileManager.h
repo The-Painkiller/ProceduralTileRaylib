@@ -4,6 +4,7 @@
 #include <memory>
 #include <Vector2.hpp>
 #include "DataParser.h"
+#include "Utils.h"
 
 class TileManager
 {

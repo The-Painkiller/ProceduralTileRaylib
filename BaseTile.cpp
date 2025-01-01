@@ -77,6 +77,17 @@ std::vector<TerrainTileType> BaseTile::UpdateEntropy(const std::vector<TerrainTi
 		}
 	}
 
+	if (intersection.size() == 0 && !_validNeighbours.empty())
+	{
+		for (int i = 0; i < _validNeighbours.size(); i++)
+		{
+			if (std::find(validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), _validNeighbours[i]) != validNeighourListOfIncomingTile.end())
+			{
+				intersection.push_back(_validNeighbours[i]);
+			}
+		}
+	}
+
 	if (intersection.size() == 0)
 	{
 		intersection.push_back(validNeighourListOfIncomingTile[0]);
