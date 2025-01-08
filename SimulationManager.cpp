@@ -5,6 +5,7 @@ SimulationManager::SimulationManager()
 	_dataParser = std::shared_ptr<DataParser>(new DataParser());
 	_tileManager = std::unique_ptr<TileManager>(new TileManager(GridSizeX, GridSizeY, _dataParser));
 	_renderManager = std::unique_ptr<RenderManager>(new RenderManager(GridSizeX, GridSizeY, GlobalHeader::TileSize));
+	Utils();
 }
 
 bool SimulationManager::SimulationLoop()

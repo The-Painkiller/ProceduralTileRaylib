@@ -2,6 +2,7 @@
 #include "DataParser.h"
 #include "RenderManager.h"
 #include "TileManager.h"
+#include "Utils.h";
 
 class SimulationManager
 {
