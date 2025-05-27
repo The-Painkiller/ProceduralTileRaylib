@@ -44,12 +44,12 @@ void RenderManager::DrawTileGrid()
 	{
 		for (int j = 0; j < _gridSize.y; j++)
 		{
-			DrawTile(_tilesGrid[i][j].get()->GetTerrainTileType(), _tilesGrid[i][j].get()->IsTransitionTile(), i, j);
+			DrawTile(_tilesGrid[i][j].get()->GetTerrainTileType(), i, j);
 		}
 	}
 }
 
-void RenderManager::DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY)
+void RenderManager::DrawTile(TerrainTileType tileType, int gridX, int gridY)
 {
 	switch (tileType)
 	{
@@ -98,6 +98,10 @@ void RenderManager::DrawTile(TerrainTileType tileType, bool isTransitionTile, in
 		DrawTexture(_sandWaterTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
 		break;
 	}
+	case WaterGrassTransition:
+	{
+		DrawTexture(_waterGrassTexture, gridX * _tileSize, gridY * _tileSize, WHITE);
+	}
 	case TerrainTileTypeCount:
 	case InvalidTileType:
 	default:
@@ -140,4 +144,6 @@ void RenderManager::LoadRenderData()
 	_rockWaterTexture = LoadTexture(_tileRenderData.RockWaterTexturePath.c_str());
 	_sandGrassTexture = LoadTexture(_tileRenderData.SandGrassTexturePath.c_str());
 	_sandWaterTexture = LoadTexture(_tileRenderData.SandWaterTexturePath.c_str());
+	_waterGrassTexture = LoadTexture(_tileRenderData.WaterGrassTexturePath.c_str());
+	_invalidTerrainTexture = LoadTexture(_tileRenderData.InvalidTexturePath.c_str());
 }

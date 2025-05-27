@@ -11,6 +11,7 @@ public:
 	~SimulationManager() = default;
 
 	void InitializeComponents();
+	void ForceTileEntropy(const Vector2 tileLocation, const TerrainTileType tileType, const std::vector<TerrainTileType> validNeighbours);
 	bool SimulationLoop();
 
 private:

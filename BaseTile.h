@@ -15,21 +15,20 @@ public:
 	void SetValidNeighbours(const std::vector<TerrainTileType> validNeighbours);
 	void RemoveEntropyIfExists(const TerrainTileType type);
 	void ForceSetTile(const TerrainTileType type, const unsigned size, const std::vector<TerrainTileType>& validNeighbours);
-	void SetTransitionFlag(bool isTransitionTile);
+	void SetIterationFlag(bool isIterated);
 	TerrainTileType GetTerrainTileType();
-	bool IsTransitionTile();
 	int GetEntropyCount();
 	int GetValidNeighbourCount();
+	bool IsIteratedOver();
 	TerrainTileType GetEntropy(int index);
 	TerrainTileType GetValidNeighbour(int index);
 	std::vector<TerrainTileType>& GetValidNeighbours();
-	//std::vector<TerrainTileType>& IntersectNeighbourWithEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
-	std::vector<TerrainTileType> UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
+	void UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile);
 
 private:
 	TerrainTileType _terrainTileType = TerrainTileType::InvalidTileType;
 	unsigned int _tileSize = 0;
 	std::vector<TerrainTileType> _tileEntropies;
 	std::vector<TerrainTileType> _validNeighbours;
-	bool _isTransitionTile = false;
+	bool _isIteratedOver = false;
 };

@@ -49,15 +49,17 @@ void DataParser::SetData(TerrainTileType terrainTileType)
 		data.ValidNeighbours.push_back(neighbour);
 	}
 
-	switch (terrainTileType)
-	{
-	case InvalidTileType:
-		break;
-	default:
-		_tileData[terrainTileType] = data;
-		_tileData[terrainTileType].TileType = terrainTileType;
-		break;
-	}
+    _tileData[terrainTileType] = data;
+    _tileData[terrainTileType].TileType = terrainTileType;
+    /*switch (terrainTileType)
+    {
+    case InvalidTileType:
+        break;
+    default:
+        _tileData[terrainTileType] = data;
+        _tileData[terrainTileType].TileType = terrainTileType;
+        break;
+    }*/
 }
 
 std::string DataParser::GetTerrainTileTypeString(TerrainTileType type)

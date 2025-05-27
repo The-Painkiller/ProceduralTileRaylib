@@ -5,19 +5,15 @@ SimulationManager::SimulationManager()
 	_dataParser = std::shared_ptr<DataParser>(new DataParser());
 	_tileManager = std::unique_ptr<TileManager>(new TileManager(GridSizeX, GridSizeY, _dataParser));
 	_renderManager = std::unique_ptr<RenderManager>(new RenderManager(GridSizeX, GridSizeY, GlobalHeader::TileSize));
-	Utils();
+	Utils(GridSizeX, GridSizeY);
 }
 
 bool SimulationManager::SimulationLoop()
 {
+	// TODO: In the future, use this loop to dynamically place tiles using a UI.
 	while (!_renderManager->ShouldGraphicsWindowClose())
 	{
 		_renderManager->RenderLoop();
-
-		//if (_tileManager->Obervation()
-		//{
-		//	_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
-		//}
 	}
 
 	_renderManager->CloseGraphicsWindow();
@@ -44,6 +40,12 @@ void SimulationManager::InitializeComponents()
 	_renderManager->RefreshTileGrid(_tileManager->GetTileArray());
 	
 	
-	_tileManager->ForceTileEntropy(Vector2{ 5, 5 }, Rock, _dataParser->GetTileData(Rock).ValidNeighbours);
-	//_tileManager->ForceTileEntropy(Vector2{ 1, 3 }, Water, _dataParser->GetTileData(Water).ValidNeighbours);
+	ForceTileEntropy(Vector2{ 5, 5 }, Rock, _dataParser->GetTileData(Rock).ValidNeighbours);
+	ForceTileEntropy(Vector2{ 1, 3 }, Water, _dataParser->GetTileData(Water).ValidNeighbours);
+}
+
+void SimulationManager::ForceTileEntropy(const Vector2 tileLocation, const TerrainTileType tileType, const std::vector<TerrainTileType> validNeighbours)
+{
+    _tileManager->ClearTileIterations();
+    _tileManager->ForceTileEntropy(tileLocation, tileType, validNeighbours);
 }

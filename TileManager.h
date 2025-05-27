@@ -17,9 +17,8 @@ public:
 	void Obervation(const Vector2 tileLocation, BaseTile& neighbourTileWithEntropyOne);
 	std::vector<std::vector<std::shared_ptr<BaseTile>>>& GetTileArray();
 	void ForceTileEntropy(const Vector2 tileLocation, const TerrainTileType type, const std::vector<TerrainTileType> validNeighbours);
-	void CalculateEntropies();
-	void CollapseEntropies(const Vector2 tileLocation, const std::vector<TerrainTileType> entropies);
-
+	void ClearTileIterations();
+	TerrainTileType CollapseEntropy(const Vector2& tileLocation, BaseTile* currentTile, int& currentTileEntropy);
 
 private:
 	int _gridSizeX = 0;

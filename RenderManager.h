@@ -12,6 +12,7 @@
 struct TileRenderData
 {
 public:
+	std::string InvalidTexturePath;
 	std::string GrassTexturePath;
 	std::string RockTexturePath;
 	std::string SandTexturePath;
@@ -21,6 +22,7 @@ public:
 	std::string RockGrassTexturePath;
 	std::string SandWaterTexturePath;
 	std::string SandGrassTexturePath;
+	std::string WaterGrassTexturePath;
 };
 
 class RenderManager
@@ -59,9 +61,10 @@ private:
 	Texture2D _rockWaterTexture = {};
 	Texture2D _sandWaterTexture = {};
 	Texture2D _sandGrassTexture = {};
-	Texture2D _invalidTerrainTexture = Texture2D();
+	Texture2D _waterGrassTexture = {};
+	Texture2D _invalidTerrainTexture = {};
 	
 	void LoadRenderData();
 	void DrawTileGrid();
-	void DrawTile(TerrainTileType tileType, bool isTransitionTile, int gridX, int gridY);
+	void DrawTile(TerrainTileType tileType, int gridX, int gridY);
 };

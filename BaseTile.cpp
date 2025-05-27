@@ -61,12 +61,12 @@ void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size, con
 	_validNeighbours = validNeighbours;
 }
 
-void BaseTile::SetTransitionFlag(bool isTransitionTile)
+void BaseTile::SetIterationFlag(bool isIterated)
 {
-	_isTransitionTile = isTransitionTile;
+	_isIteratedOver = isIterated;
 }
 
-std::vector<TerrainTileType> BaseTile::UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
+void BaseTile::UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
 {
 	std::vector<TerrainTileType> intersection = std::vector<TerrainTileType>();
 	for (int i = 0; i < _tileEntropies.size(); i++)
@@ -92,18 +92,13 @@ std::vector<TerrainTileType> BaseTile::UpdateEntropy(const std::vector<TerrainTi
 	{
 		intersection.push_back(validNeighourListOfIncomingTile[0]);
 	}
-	
-	return intersection;
+
+	_tileEntropies = intersection;
 }
 
 TerrainTileType BaseTile::GetTerrainTileType()
 {
 	return _terrainTileType;
-}
-
-bool BaseTile::IsTransitionTile()
-{
-	return _isTransitionTile;
 }
 
 int BaseTile::GetEntropyCount()
@@ -116,9 +111,14 @@ int BaseTile::GetValidNeighbourCount()
 	return _validNeighbours.size();
 }
 
+bool BaseTile::IsIteratedOver()
+{
+	return _isIteratedOver;
+}
+
 TerrainTileType BaseTile::GetEntropy(int index)
 {
-	if (_tileEntropies.size() == 0)
+	if (_tileEntropies.size() == 0 || _tileEntropies.size() <= index)
 	{
 		return TerrainTileType::InvalidTileType;
 	}
