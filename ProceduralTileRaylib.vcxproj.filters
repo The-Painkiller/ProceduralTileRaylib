@@ -45,6 +45,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BiasManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTile.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BiasManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,6 +107,9 @@
       <Filter>Resource Files\Textures</Filter>
     </Image>
     <Image Include="assets\Textures\Tile_Water.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="assets\Textures\Tile_WaterGrass.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>

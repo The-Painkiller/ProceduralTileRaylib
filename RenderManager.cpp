@@ -2,8 +2,8 @@
 
 RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSize)
 {
-	_gridSize.x = gridSizeX;
-	_gridSize.y = gridSizeY;
+	_gridSize.x = (float)gridSizeX;
+	_gridSize.y = (float)gridSizeY;
 
 	_tileSize = tileSize;
 	_screenWidth = tileSize * gridSizeX;
@@ -11,6 +11,8 @@ RenderManager::RenderManager(int gridSizeX, int gridSizeY, int tileSize)
 
 	_camera.rotation = 0.0f;
 	_camera.zoom = 1.0f;
+
+	_tilesGrid.reserve(gridSizeX);
 
 	InitWindow(_screenWidth, _screenHeight, "Procedural 2D Terrain");
 	SetTargetFPS(60);

@@ -5,7 +5,6 @@ BaseTile::BaseTile(TerrainTileType tileType, unsigned int size)
 {
 	_terrainTileType = tileType;
 	_tileSize = size;
-	//_validNeighbours = validNeighbours;
 }
 
 BaseTile::~BaseTile()
@@ -61,33 +60,67 @@ void BaseTile::ForceSetTile(const TerrainTileType type, const unsigned size, con
 	_validNeighbours = validNeighbours;
 }
 
-void BaseTile::SetIterationFlag(bool isIterated)
+void BaseTile::SetIterationFlag(const bool isIterated)
 {
 	_isIteratedOver = isIterated;
 }
 
-void BaseTile::UpdateEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
+void BaseTile::CollapseEntropy(const std::vector<TerrainTileType>& validNeighourListOfIncomingTile)
 {
+	// When create a set intersection to bring down the entropy of the current tile,
+	// first a set intersection is done between the entropy of the current tile and the list of valid neighbours of the adjacent tile that's passed.
+	// A bias is used to select the most favourable tile type.
+
 	std::vector<TerrainTileType> intersection = std::vector<TerrainTileType>();
 	for (int i = 0; i < _tileEntropies.size(); i++)
 	{
 		if (std::find(validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), _tileEntropies[i]) != validNeighourListOfIncomingTile.end())
 		{
-			intersection.push_back(_tileEntropies[i]);
+            if (_terrainTileType == InvalidTileType)
+            {
+                if (BiasManager::IsBiasValid(_tileEntropies[i]))
+                {
+                    intersection.push_back(_tileEntropies[i]);
+                }
+            }
+            else
+            {
+                intersection.push_back(_tileEntropies[i]);
+            }
 		}
 	}
+
+	// In case the set intersection with the passed list of valid neighbours of the adjacent tile and current tile's entropy returns 0,
+	// a set intersection is run between the lists of valid neighbours of both the tiles and run through a bias.
 
 	if (intersection.size() == 0 && !_validNeighbours.empty())
 	{
 		for (int i = 0; i < _validNeighbours.size(); i++)
 		{
-			if (std::find(validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), _validNeighbours[i]) != validNeighourListOfIncomingTile.end())
+			if (std::find(validNeighourListOfIncomingTile.begin(), validNeighourListOfIncomingTile.end(), _validNeighbours[i]) != validNeighourListOfIncomingTile.end()
+				 && BiasManager::IsBiasValid(_validNeighbours[i]))
 			{
 				intersection.push_back(_validNeighbours[i]);
 			}
 		}
 	}
 
+	// If it still returns 0, the running through bias, the most favourable tile from the list of valid neighbours of the adjacent tile is chosen.
+	
+	if (intersection.size() == 0)
+	{
+		for (int i = 0; i < validNeighourListOfIncomingTile.size(); i++)
+		{
+			if (!BiasManager::IsBiasValid(validNeighourListOfIncomingTile[i]))
+			{
+				continue;
+			}
+			intersection.push_back(validNeighourListOfIncomingTile[i]);
+		}
+	}
+
+	// If everything returns an intersection set of 0, then the first valid tile type from the list of valid neighbours of 
+	// the adjacent tile is selected outright as a last resort.
 	if (intersection.size() == 0)
 	{
 		intersection.push_back(validNeighourListOfIncomingTile[0]);
@@ -116,7 +149,7 @@ bool BaseTile::IsIteratedOver()
 	return _isIteratedOver;
 }
 
-TerrainTileType BaseTile::GetEntropy(int index)
+TerrainTileType BaseTile::GetEntropy(const int index)
 {
 	if (_tileEntropies.size() == 0 || _tileEntropies.size() <= index)
 	{
@@ -126,7 +159,7 @@ TerrainTileType BaseTile::GetEntropy(int index)
 	return _tileEntropies[index];
 }
 
-TerrainTileType BaseTile::GetValidNeighbour(int index)
+TerrainTileType BaseTile::GetValidNeighbour(const int index)
 {
 	if (_validNeighbours.size() == 0)
 	{

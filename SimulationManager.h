@@ -2,8 +2,12 @@
 #include "DataParser.h"
 #include "RenderManager.h"
 #include "TileManager.h"
-#include "Utils.h";
+#include "Utils.h"
+#include "BiasManager.h"
 
+/// <summary>
+/// Simulation Manager is the primary class that initializes and connects other classes to each other.
+/// </summary>
 class SimulationManager
 {
 public:
@@ -18,8 +22,10 @@ private:
 	std::shared_ptr<DataParser> _dataParser;
 	std::unique_ptr<RenderManager> _renderManager;
 	std::unique_ptr<TileManager> _tileManager;
+	std::unique_ptr<BiasManager> _biasManager;
 
-	const int GridSizeX = 10;
-	const int GridSizeY = 10;
-	const int TileSize = 64;
+	void InitializeBiasManagerData();
+	void InitializeTileRenderData();
+	void SetTileToTerrainType(const Vector2 tileLocation, const TerrainTileType terrainType);
+	void PrintTileArray();
 };

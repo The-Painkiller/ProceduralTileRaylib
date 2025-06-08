@@ -6,6 +6,9 @@
 #include "DataParser.h"
 #include "Utils.h"
 
+/// <summary>
+/// TileManager manages the array of tiles along with their BaseTile class attributes.
+/// </summary>
 class TileManager
 {
 public:
@@ -14,11 +17,11 @@ public:
 	~TileManager();
 
 	void InitializeTileGrid();
-	void Obervation(const Vector2 tileLocation, BaseTile& neighbourTileWithEntropyOne);
+	void Obervation(const Vector2 tileLocation, BaseTile& neighbourTileWithEntropyOne, const TraverseDirection direction);
 	std::vector<std::vector<std::shared_ptr<BaseTile>>>& GetTileArray();
 	void ForceTileEntropy(const Vector2 tileLocation, const TerrainTileType type, const std::vector<TerrainTileType> validNeighbours);
 	void ClearTileIterations();
-	TerrainTileType CollapseEntropy(const Vector2& tileLocation, BaseTile* currentTile, int& currentTileEntropy);
+	TerrainTileType CollapseEntropyInDirection(const Vector2& tileLocation, BaseTile& currentTile, int currentTileEntropy, const TraverseDirection direction);
 
 private:
 	int _gridSizeX = 0;

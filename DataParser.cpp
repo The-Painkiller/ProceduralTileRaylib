@@ -12,6 +12,7 @@ DataParser::~DataParser()
 void DataParser::Initialize()
 {
 	_tileData = std::vector<TileData>(TerrainTileTypeCount);
+	_biasData = std::vector<BiasData>(TerrainBiasCategoryCount);
 	std::ifstream ifs;
 	ifs.open(_terrainTileDataPath, std::ifstream::in);
 	if (ifs.is_open())
@@ -20,24 +21,37 @@ void DataParser::Initialize()
 	}
 	ifs.close();
 
+	auto tileDataRoot = _terrainTileDataJson["TileData"];
 	for (int i = TerrainTileType::InvalidTileType; i < TerrainTileType::TerrainTileTypeCount; i++)
 	{
 		TerrainTileType tileType = (TerrainTileType)i;
-		SetData((TerrainTileType)i);
+		SetTileData(tileDataRoot, (TerrainTileType)i);
+	}
+
+	auto biasDataRoot = _terrainTileDataJson["Bias"];
+	for (int i = TerrainBiasCategory::RockBias; i <= TerrainBiasCategory::GrassBias; i++)
+	{
+		TerrainBiasCategory terrainCategory = (TerrainBiasCategory)i;
+		SetBiasData(biasDataRoot, terrainCategory);
 	}
 }
 
-TileData DataParser::GetTileData(TerrainTileType tileType)
+TileData DataParser::GetTileData(const TerrainTileType tileType)
 {
 	return _tileData[tileType];
 }
 
-void DataParser::SetData(TerrainTileType terrainTileType)
+BiasData DataParser::GetTerrainTypeBiasData(const TerrainBiasCategory terrainCategory)
+{
+	return _biasData[terrainCategory];
+}
+
+void DataParser::SetTileData(const json dataRoot, const TerrainTileType terrainTileType)
 {
 	TileData data = {};
-	auto dataRoot = _terrainTileDataJson[GetTerrainTileTypeString(terrainTileType)];
-	auto dataTexturePaths = dataRoot["TexturePaths"];
-	auto dataNeighbours = dataRoot["Neighbours"];
+	auto terrainData = dataRoot[Utils::GetTerrainTileTypeString(terrainTileType)];
+	auto dataTexturePaths = terrainData["TexturePaths"];
+	auto dataNeighbours = terrainData["Neighbours"];
 
 	for (auto& texture : dataTexturePaths)
 	{
@@ -51,42 +65,21 @@ void DataParser::SetData(TerrainTileType terrainTileType)
 
     _tileData[terrainTileType] = data;
     _tileData[terrainTileType].TileType = terrainTileType;
-    /*switch (terrainTileType)
-    {
-    case InvalidTileType:
-        break;
-    default:
-        _tileData[terrainTileType] = data;
-        _tileData[terrainTileType].TileType = terrainTileType;
-        break;
-    }*/
 }
 
-std::string DataParser::GetTerrainTileTypeString(TerrainTileType type)
+void DataParser::SetBiasData(const json dataRoot, const TerrainBiasCategory biasCategory)
 {
-	switch (type)
+	BiasData data = {};
+	auto biasData = dataRoot[Utils::GetTerrainBiasCategoryString(biasCategory)];
+	float biasvalue = biasData["Bias"];
+	data.Bias = biasvalue;
+
+	auto validTerrainTypes = biasData["ValidTerrainTypes"];
+
+	for (auto& terrainType : validTerrainTypes)
 	{
-	case Rock:
-		return "Rock";
-	case Grass:
-		return "Grass";
-	case Sand:
-		return "Sand";
-	case Water:
-		return "Water";
-	case RockGrassTransition:
-		return "RockGrass";
-	case RockSandTransition:
-		return "RockSand";
-	case RockWaterTransition:
-		return "RockWater";
-	case SandGrassTransition:
-		return "SandGrass";
-	case SandWaterTransition:
-		return "SandWater";
-	case TerrainTileTypeCount:
-		return "TerrainTileTypeCount";
-	default:
-		return "InvalidTileType";
+		data.ValidTerrainTypes.push_back(terrainType);
 	}
+
+	_biasData[biasCategory] = data;
 }

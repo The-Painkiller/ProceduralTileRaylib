@@ -1,26 +1,22 @@
 #pragma once
-#include <string>
 #include "single_include\nlohmann\json.hpp"
 #include <fstream>
 #include "GlobalHeader.h"
+#include "Utils.h"
 
 using json = nlohmann::json;
 
-struct TileData 
-{
-public:
-	TerrainTileType TileType;
-	std::string TileTexturePath;
-	std::vector<TerrainTileType> ValidNeighbours;
-};
-
+/// <summary>
+/// Data parser will take data from the supplied json location and feed it to Tile and Bias Managers.
+/// </summary>
 class DataParser
 {
 public:
 	DataParser() = default;
 	~DataParser();
 	void Initialize();
-	TileData GetTileData(TerrainTileType tileType);
+	TileData GetTileData(const TerrainTileType tileType);
+	BiasData GetTerrainTypeBiasData(const TerrainBiasCategory terrainCategory);
 
 private:
 	json _terrainTileDataJson;
@@ -28,7 +24,8 @@ private:
 	const char* _terrainTileDataPath = "assets/JSON/TerrainTileData.json";
 
 	std::vector<TileData> _tileData;
+	std::vector<BiasData> _biasData;
 
-	void SetData(TerrainTileType terrainTileType);
-	std::string GetTerrainTileTypeString(TerrainTileType type);
+	void SetTileData(const json dataRoot, const TerrainTileType terrainTileType);
+	void SetBiasData(const json dataRoot, const TerrainBiasCategory biasCategory);
 };

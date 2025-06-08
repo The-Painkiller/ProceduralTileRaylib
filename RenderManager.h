@@ -4,11 +4,6 @@
 #include <memory>
 #include <string>
 
-/// <summary>
-/// All char pointers are arrays of 2.
-/// Index 0: Plain texture,
-/// Index 1: Transition texture.
-/// </summary>
 struct TileRenderData
 {
 public:
@@ -25,6 +20,10 @@ public:
 	std::string WaterGrassTexturePath;
 };
 
+/// <summary>
+/// Connecting to Raylib, RenderManager only takes care of trhe rendering bit.
+/// It has the render loop and a method to refresh the tile grid.
+/// </summary>
 class RenderManager
 {
 public:
